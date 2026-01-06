@@ -1,10 +1,12 @@
-from my_project.model import Model
-from my_project.data import corrupt_mnist
-import matplotlib.pyplot as plt
 import torch
-import typer
+
+from my_project.data import corrupt_mnist
+from my_project.model import Model
+
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
-def evaluate(model_checkpoint: str) -> None:
+
+
+def evaluate(model_checkpoint: str = "model.pth") -> None:
     """Evaluate a trained model."""
     print("Evaluating like my life depended on it")
     print(model_checkpoint)
@@ -24,5 +26,6 @@ def evaluate(model_checkpoint: str) -> None:
         total += target.size(0)
     print(f"Test accuracy: {correct / total}")
 
+
 if __name__ == "__main__":
-    evaluate("model.pth")
+    evaluate()

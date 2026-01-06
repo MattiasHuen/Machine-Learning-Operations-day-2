@@ -1,9 +1,8 @@
-from my_project.model import Model
-from my_project.data import corrupt_mnist
 import matplotlib.pyplot as plt
 import torch
-import typer
 
+from my_project.data import corrupt_mnist
+from my_project.model import Model
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
@@ -47,7 +46,6 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 10) -> None:
     axs[1].plot(statistics["train_accuracy"])
     axs[1].set_title("Train accuracy")
     fig.savefig("training_statistics.png")
-
 
 
 if __name__ == "__main__":
