@@ -3,9 +3,14 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+import joblib
+from typing import Annotated
+import typer
 
+app = typer.Typer()
 
-def train():
+@app.command()
+def train(output : Annotated[str, typer.Option("--output", "-o")] = "model.ckpt") -> tuple[float, str]:
     """Train and evaluate the model."""
     # Load the dataset
     data = load_breast_cancer()
@@ -24,6 +29,10 @@ def train():
     model = SVC(kernel="linear", random_state=42)
     model.fit(x_train, y_train)
 
+    # Save model
+    joblib.dump(model, output)
+
+
     # Make predictions on the test set
     y_pred = model.predict(x_test)
 
@@ -40,4 +49,4 @@ def train():
 
 # this "if"-block is added to enable the script to be run from the command line
 if __name__ == "__main__":
-    train()
+    app()
